@@ -1,0 +1,100 @@
+name: validate-submission
+
+# Triggered on every PR that touches a submission directory, and on every
+# push to the leaderboard branch.
+on:
+  pull_request:
+    paths:
+      - 'submissions/**'
+      - 'leaderboard/**'
+  push:
+    branches:
+      - leaderboard
+
+concurrency:
+  group: validate-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate submissions
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache Ajv
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-ajv-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-ajv-
+
+      - name: Fetch OpenAPI spec
+        run: |
+          curl -fsSL -o /tmp/openapi.json https://longevityagent.top/api/openapi.json
+          echo "OpenAPI spec fetched: $(wc -c < /tmp/openapi.json) bytes"
+
+      - name: Install validator
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-audit --no-fund ajv@8 ajv-formats@3
+
+      - name: Run validation
+        id: validate
+        env:
+          OPENAPI_URL: https://longevityagent.top/api/openapi.json
+        run: |
+          node .github/validate.mjs
+
+      - name: Apply lane labels
+        if: steps.validate.outputs.lanes != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const lanes = `${{ steps.validate.outputs.lanes }}`.split(',').filter(Boolean);
+            for (const lane of lanes) {
+              const color = lane.startsWith('q1') ? '5319e7'
+                          : lane.startsWith('q2') ? '1f883d'
+                          : lane.startsWith('q3') ? 'd93f0b'
+                          : '0e8a16';
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: [`lane:${lane}`, 'submission']
+                });
+              } catch (e) {
+                core.warning(`Could not add label lane:${lane}: ${e.message}`);
+              }
+            }
+
+      - name: Comment validation report
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.existsSync('/tmp/validation-report.md')
+              ? fs.readFileSync('/tmp/validation-report.md', 'utf8')
+              : 'No report generated.';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: report
+            });

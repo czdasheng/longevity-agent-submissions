@@ -1,0 +1,21 @@
+# Don't commit large molecule databases, model checkpoints, or generated
+# 3D conformers. Keep PRs focused.
+*.sdf
+*.mol2
+*.pdbqt
+*.cif
+*.ckpt
+*.pt
+*.pth
+*.h5
+*.parquet
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Node (the validator workflow uses Node)
+node_modules/
+package-lock.json
