@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.7.1",
+  "schema_version": "0.8.0",
   "channel": "github_pr",
   "track": "q1",
   "owner_handle": "_reference-wet-lab-first",
@@ -7,6 +7,16 @@
   "github_pr_url": "https://github.com/AndyZhuang/longevity-agent-submissions/pull/0",
   "human_input_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
   "human_input_questions_answered": 8,
+  "human_input_meta_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "human_input_meta_questions_answered": 5,
+  "human_input_meta_visibility": "public",
+  "human_input_meta_answers": {
+    "q1": "5-20 hours (serious part-time, multi-iteration)",
+    "q2": "Iterate fast — submit up to 5 times, pick the best at the end",
+    "q3": "Win this quarter lane — chase the $80k lane champion prize",
+    "q4": "Solo — just me and the agent",
+    "q5": "Moderate — submit when the design is reasonable, even if not perfect"
+  },
 
   "candidate": {
     "smiles": "Cc1ccc(NC(=O)c2ccc(CN3CCN(C)CC3)cc2)cc1Nc1nccc(-c2cccnc2)n1",

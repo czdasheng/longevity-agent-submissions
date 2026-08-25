@@ -179,6 +179,21 @@ function main() {
         const n = payload.human_input_questions_answered;
         if (n < 5 || n > 8) errors.push(`human_input_questions_answered must be 5-8, got ${n}`);
       }
+      // v0.8 meta questions
+      if (payload.human_input_meta_digest != null) {
+        if (!/^sha256:[a-f0-9]{64}$/.test(payload.human_input_meta_digest)) {
+          errors.push(`human_input_meta_digest must match ^sha256:[a-f0-9]{64}$, got "${payload.human_input_meta_digest}"`);
+        }
+      }
+      if (payload.human_input_meta_questions_answered != null) {
+        if (payload.human_input_meta_questions_answered !== 5) {
+          errors.push(`human_input_meta_questions_answered must be exactly 5, got ${payload.human_input_meta_questions_answered}`);
+        }
+      }
+      if (payload.human_input_meta_visibility != null &&
+          !['public', 'private'].includes(payload.human_input_meta_visibility)) {
+        errors.push(`human_input_meta_visibility must be "public" or "private", got "${payload.human_input_meta_visibility}"`);
+      }
     }
 
     // Safety floor (per quarter)
