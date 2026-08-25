@@ -74,6 +74,11 @@ function parseDirParts(submissionJsonPath) {
   const parts = rel.split(sep);
   if (parts.length < 4) return { ok: false, reason: 'submission.json must be at submissions/<track>/<handle>/<ts>/submission.json' };
   const [track, handle, ts] = parts;
+  // Skip reference / example directories (any segment starting with `_`).
+  // These are public templates, not real submissions.
+  if (parts.slice(0, -1).some((p) => p.startsWith('_'))) {
+    return { ok: false, reason: 'reference directory (underscore prefix); skipped', skip: true };
+  }
   if (!/^q[1-4]$/.test(track)) return { ok: false, reason: `track directory must be q1|q2|q3|q4, got "${track}"` };
   if (!/^[a-z0-9][a-z0-9-]{2,39}$/.test(handle)) return { ok: false, reason: `handle "${handle}" must be kebab-case 3-40 chars` };
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z$/.test(ts)) return { ok: false, reason: `timestamp "${ts}" must match YYYY-MM-DDTHH-MM-SSZ` };
@@ -145,7 +150,14 @@ function main() {
     }
 
     const errors = [];
-    if (!dirParts.ok) errors.push(`path: ${dirParts.reason}`);
+    if (!dirParts.ok) {
+      if (dirParts.skip) {
+        // Reference directory; mark as skipped and don't validate.
+        results.push({ file: relative(REPO_ROOT, file), ok: true, errors: [], skipped: true, note: dirParts.reason });
+        continue;
+      }
+      errors.push(`path: ${dirParts.reason}`);
+    }
 
     // Ajv schema check
     if (!validate(payload)) {
@@ -206,9 +218,12 @@ function main() {
 
   // Markdown report
   const lines = ['## LAGP submission validation', ''];
-  const okCount = results.filter(r => r.ok).length;
-  lines.push(`**${okCount} / ${results.length} valid**`, '');
-  for (const r of results) {
+  const realResults = results.filter((r) => !r.skipped);
+  const skippedResults = results.filter((r) => r.skipped);
+  const okCount = realResults.filter((r) => r.ok).length;
+  const failCount = realResults.length - okCount;
+  lines.push(`**${okCount} / ${realResults.length} valid**${skippedResults.length ? ` (${skippedResults.length} reference template(s) skipped)` : ''}`, '');
+  for (const r of realResults) {
     lines.push(`### ${r.ok ? '✅' : '❌'} \`${r.file}\``);
     if (r.lane) lines.push(`- track: \`${r.track}\` · lane: \`${r.lane}\``);
     if (!r.ok) {
@@ -217,13 +232,20 @@ function main() {
     }
     lines.push('');
   }
+  if (skippedResults.length) {
+    lines.push('---', '', '### Reference templates (skipped, underscore prefix)', '');
+    for (const r of skippedResults) {
+      lines.push(`- \`${r.file}\` — ${r.note || 'public template'}`);
+    }
+    lines.push('');
+  }
   writeFileSync('/tmp/validation-report.md', lines.join('\n'));
   setOutput('lanes', [...validLanes].join(','));
 
-  if (okCount !== results.length) {
-    setFailed(`${results.length - okCount} submission(s) failed validation`);
+  if (failCount > 0) {
+    setFailed(`${failCount} submission(s) failed validation`);
   } else {
-    summary.addRaw(`✅ All ${okCount} submission(s) valid`);
+    summary.addRaw(`✅ All ${okCount} submission(s) valid${skippedResults.length ? ` (${skippedResults.length} reference skipped)` : ''}`);
   }
 
   // eslint-disable-next-line no-console

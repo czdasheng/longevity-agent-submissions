@@ -1,0 +1,8 @@
+{"ts": "2026-08-22T12:00:00.000Z", "tool": "init", "args": {"model": "Mavis/M3", "seed": 42, "lane": "wet-lab-first"}}
+{"ts": "2026-08-22T12:00:00.500Z", "tool": "rdkit.scaffold", "args": {"smiles": "Cc1ccc(NC(=O)c2ccc(CN3CCN(C)CC3)cc2)cc1Nc1nccc(-c2cccnc2)n1"}, "out": {"scaffold": "navitoclax-BCL2-family", "mw": 428.5}}
+{"ts": "2026-08-22T12:00:01.000Z", "tool": "admet.predict", "args": {"smiles": "..."}, "out": {"caco2_logpapp": -4.7, "herg_pIC50": 5.2, "cyp3a4_inhibition_uM": 12.4, "microsomal_half_life_min": 28}}
+{"ts": "2026-08-22T12:00:01.500Z", "tool": "selectivity.predict", "args": {"smiles": "...", "model": "v3"}, "out": {"senescent_apoptosis_EC50_uM": 0.42, "proliferating_apoptosis_EC50_uM": 6.0, "index": 14.2}}
+{"ts": "2026-08-22T12:00:02.000Z", "tool": "offtarget.panel", "args": {"smiles": "...", "n_targets": 30}, "out": {"flagged": ["hERG", "CYP3A4"], "blocked": false}}
+{"ts": "2026-08-22T12:00:02.500Z", "tool": "synthesis.plan", "args": {"smiles": "...", "max_steps": 4}, "out": {"steps": 4, "commercial_materials": true, "route_smi": "..."}}
+{"ts": "2026-08-22T12:00:03.000Z", "tool": "safety.floor", "args": {"candidate": {...}}, "out": {"passed": true, "violations": []}}
+{"ts": "2026-08-22T12:00:03.500Z", "tool": "submit", "args": {"channel": "github_pr", "track": "q1", "lane": "wet-lab-first"}, "out": {"pr_url": "https://github.com/<handle>/longevity-agent-submissions/pull/42", "status": "validating"}}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.7.1",
+  "channel": "github_pr",
+  "track": "q1",
+  "owner_handle": "_reference-wet-lab-first",
+  "owner_lane": "wet-lab-first",
+  "github_pr_url": "https://github.com/AndyZhuang/longevity-agent-submissions/pull/0",
+  "human_input_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "human_input_questions_answered": 8,
+
+  "candidate": {
+    "smiles": "Cc1ccc(NC(=O)c2ccc(CN3CCN(C)CC3)cc2)cc1Nc1nccc(-c2cccnc2)n1",
+    "inchi_key": "ZXCPTRSWYKQOIB-UHFFFAOYSA-N"
+  },
+  "admet": {
+    "caco2_logpapp": -4.7,
+    "herg_pIC50": 5.2,
+    "cyp3a4_inhibition_uM": 12.4,
+    "microsomal_half_life_min": 28
+  },
+  "selectivity": {
+    "senescent_apoptosis_EC50_uM": 0.42,
+    "proliferating_apoptosis_EC50_uM": 6.0,
+    "index": 14.2
+  },
+  "synthesis": {
+    "steps": 4,
+    "commercial_materials": true,
+    "route_smi": "..."
+  },
+  "reproducibility": {
+    "agent": "Reference · Mavis / M3",
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "prompt_path": "submissions/q1/_reference-wet-lab-first/2026-08-22T12-00-00Z/prompt.md",
+    "tool_log_path": "submissions/q1/_reference-wet-lab-first/2026-08-22T12-00-00Z/tool-log.jsonl",
+    "seed": 42
+  }
+}
