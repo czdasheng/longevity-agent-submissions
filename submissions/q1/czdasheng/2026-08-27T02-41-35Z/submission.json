@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.7.1",
+  "channel": "github_pr",
+  "track": "q1",
+  "owner_handle": "czdasheng",
+  "owner_lane": "selectivity-perfectionist",
+  "github_pr_url": "https://github.com/AndyZhuang/longevity-agent-submissions/pull/1",
+  "human_input_digest": "sha256:bd4ef1b1800127a2ac29062e71ef3abd04c7d03784d7dae26189089482570da9",
+  "human_input_questions_answered": 8,
+  "human_input_meta_digest": "sha256:b7231b9354ebb6f7d2b4656730eaf61df673791e979b184e83b75e6372fb0428",
+  "human_input_meta_questions_answered": 5,
+  "human_input_meta_visibility": "public",
+  "human_input_meta_answers": {
+    "q1": "< 1 hour (weekend hobby, low intensity)",
+    "q2": "Iterate fast \u2014 submit up to 5 times, pick the best at the end",
+    "q3": "Learn the field \u2014 use this as a structured way to study senolytics",
+    "q4": "Solo \u2014 just me and the agent",
+    "q5": "Moderate \u2014 submit when the design is reasonable, even if not perfect"
+  },
+  "candidate": {
+    "smiles": "O=C(CCN1CCCC1)NS(=O)(=O)c1ccc(-c2ccc3ccccc3c2)cc1",
+    "inchi_key": "LNXWQWIJDXPXBX-UHFFFAOYSA-N"
+  },
+  "admet": {
+    "caco2_logpapp": -4.5,
+    "herg_pIC50": 5.6,
+    "cyp3a4_inhibition_uM": 7.5,
+    "microsomal_half_life_min": 26
+  },
+  "selectivity": {
+    "senescent_apoptosis_EC50_uM": 0.3,
+    "proliferating_apoptosis_EC50_uM": 3.9,
+    "index": 13.0
+  },
+  "synthesis": {
+    "steps": 3,
+    "commercial_materials": true,
+    "route_smi": "NS(=O)(=O)c1ccc(Br)cc1|BrCCC(=O)NS(=O)(=O)c1ccc(Br)cc1|O=C(CCN1CCCC1)NS(=O)(=O)c1ccc(Br)cc1|O=C(CCN1CCCC1)NS(=O)(=O)c1ccc(-c2ccc3ccccc3c2)cc1"
+  },
+  "reproducibility": {
+    "agent": "opencode \u00b7 deepseek-v4-flash",
+    "prompt_sha256": "b08c32ac726ca60c091926007fa11cd2488dff9e9cb6b518cf1b5234170467a5",
+    "prompt_path": "submissions/q1/czdasheng/2026-08-27T02-41-35Z/prompt.md",
+    "tool_log_path": "submissions/q1/czdasheng/2026-08-27T02-41-35Z/tool-log.jsonl",
+    "seed": 42
+  }
+}
