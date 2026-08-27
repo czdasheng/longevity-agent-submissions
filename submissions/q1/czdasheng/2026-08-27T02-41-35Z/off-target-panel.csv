@@ -1,0 +1,38 @@
+# Off-target panel — SEN-408 (in-silico predictions)
+# Method: similarity-based consensus against target-annotated chemogenomics
+# sets + published SAR priors. Values are PREDICTED (not experimental).
+# target,family,predicted_Ki_or_IC50_uM,effect,flag
+BCL-XL (BCL2L1),BCL-2 family,0.025,inhibition (primary target),none
+BCL-2,BCL-2 family,1.5,weak inhibition (60x vs BCL-XL),selectivity note
+MCL-1,BCL-2 family,>50,no binding,selectivity note
+BCL-w (BCL2L2),BCL-2 family,8,weak inhibition,none
+BFL-1 (BCL2A1),BCL-2 family,>50,no binding,none
+BAD BH3 displacement,BCL-2 family probe,competitive,FIT probe (selectivity assay),none
+BAX,BCL-2 family effector,no direct,no binding,none
+BAK,BCL-2 family effector,no direct,no binding,none
+SRC,kinase,>10,no inhibition,none
+ABL1,kinase,>10,no inhibition,none
+KIT,kinase,>10,no inhibition,none
+PDGFRB,kinase,>10,no inhibition,none
+EGFR,kinase,>10,no inhibition,none
+FGFR1,kinase,>10,no inhibition,none
+LCK,kinase,>10,no inhibition,none
+JAK2,kinase,>10,no inhibition,none
+RIPK1,kinase,>10,no inhibition,none
+CYP3A4,ADME enzyme,7.5,mild-to-moderate inhibition,noted
+CYP2D6,ADME enzyme,>20,no inhibition,none
+CYP2C9,ADME enzyme,>20,no inhibition,none
+CYP1A2,ADME enzyme,>20,no inhibition,none
+CYP2C19,ADME enzyme,>20,no inhibition,none
+hERG (Kv11.1),cardiac channel,2.5 (pIC50 5.6),weak block,watch (below 6.0 floor)
+Nav1.5,cardiac channel,>30,no block,none
+Cav1.2,cardiac channel,>30,no block,none
+5-HT2A,CNS GPCR,>10,no binding,none
+D2 dopamine,CNS GPCR,>10,no binding,none
+Sigma-1,CNS receptor,>10,no binding,none
+GABA-A (BZD site),CNS channel,>10,no binding,none
+NMDA GluN2B,CNS channel,>30,no binding,none
+P-gp (ABCB1),transporter,substrate (yes) / inhibitor >30,efflux substrate,BBB note
+BCRP (ABCG2),transporter,>30,no inhibition,none
+OATP1B1,transporter,>30,no inhibition,none
+OCT2,transporter,>30,no inhibition,none
